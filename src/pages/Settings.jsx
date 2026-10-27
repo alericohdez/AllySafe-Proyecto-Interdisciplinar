@@ -8,7 +8,7 @@ export default function Settings() {
   const { darkMode, setDarkMode, fontSize, setFontSize } = useTheme();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#EEF2FF]">
       <Header showBack={true} title="Ajustes" />
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 pb-10">
