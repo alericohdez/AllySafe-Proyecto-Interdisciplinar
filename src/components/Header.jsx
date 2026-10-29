@@ -7,7 +7,7 @@ export default function Header({ showBack = false, title = '' }) {
   const { isOnline, setIsOnline } = useTheme();
 
   return (
-    <header className="w-full">
+    <header className="w-full font-inter">
       {!isOnline && (
         <div
           role="alert"
@@ -35,21 +35,21 @@ export default function Header({ showBack = false, title = '' }) {
             <button
               onClick={() => navigate(-1)}
               aria-label="Volver atrás"
-              className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-[#142146] transition-colors cursor-pointer"
             >
-              <ArrowLeft className="w-5 h-5 text-slate-800 dark:text-slate-100" />
+              <ArrowLeft className="w-5 h-5 text-slate-800 dark:text-[#F8F8FF]" />
             </button>
           ) : (
             <Link
               to="/"
               aria-label="Ir al inicio de AllySafe"
-              className="w-9 h-9 rounded-xl bg-[#2563EB] flex items-center justify-center text-white shadow-sm hover:bg-blue-700 transition-colors"
+              className="w-9 h-9 rounded-xl bg-[#1D4ED8] flex items-center justify-center text-[#F8F8FF] shadow-sm hover:bg-blue-700 transition-colors"
             >
               <Leaf className="w-5 h-5" />
             </Link>
           )}
           {title && (
-            <span className="font-semibold text-slate-800 dark:text-slate-100 text-base">
+            <span className="font-semibold text-slate-800 dark:text-[#F8F8FF] text-base">
               {title}
             </span>
           )}
@@ -59,14 +59,14 @@ export default function Header({ showBack = false, title = '' }) {
           <Link
             to="/ayuda"
             aria-label="Abrir página de ayuda"
-            className="p-2 rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+            className="p-2 rounded-full text-slate-700 dark:text-[#C5D3FF] hover:bg-slate-200 dark:hover:bg-[#142146] transition-colors"
           >
             <HelpCircle className="w-5 h-5" />
           </Link>
           <Link
             to="/ajustes"
             aria-label="Abrir ajustes y preferencias"
-            className="p-2 rounded-full text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+            className="p-2 rounded-full text-slate-700 dark:text-[#C5D3FF] hover:bg-slate-200 dark:hover:bg-[#142146] transition-colors"
           >
             <SlidersHorizontal className="w-5 h-5" />
           </Link>
