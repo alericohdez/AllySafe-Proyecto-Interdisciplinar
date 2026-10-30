@@ -5,10 +5,11 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F3F7FC] dark:bg-black font-inter transition-colors">
       <Header />
-      <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          <div className="lg:col-span-6 flex flex-col items-start text-left space-y-4">
+      <main className="flex-1 max-w-2xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-10 flex flex-col items-center">
+
+        <div className="w-full flex flex-col items-center text-center space-y-4">
+
+          <div className="lg:col-span-6 w-full flex flex-col items-start md:items-center text-left md:text-center space-y-4">
             <p className="text-2xl sm:text-3xl font-semibold text-blue-600 dark:text-[#C5D3FF]">
               Tu despensa, más clara
             </p>
@@ -93,13 +94,13 @@ export default function Home() {
                 <p>Comprueba siempre el etiquetado del envase. La información puede cambiar.</p>
               </div>
 
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="relative w-full py-3 rounded-xl bg-[#1D4ED8] hover:bg-blue-700 text-[#F8F8FF] font-semibold text-sm transition-colors shadow-sm"
               >
-                <Link 
-                  to="/nuevo-alimento" 
-                  className="absolute inset-0" 
+                <Link
+                  to="/nuevo-alimento"
+                  className="absolute inset-0"
                   aria-label="Ir a la página de añadir alimento"
                 />
                 + Añadir alimento

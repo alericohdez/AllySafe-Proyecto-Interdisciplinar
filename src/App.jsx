@@ -3,7 +3,6 @@ import { ThemeProvider } from './context/ThemeContext';
 import Home from './pages/Home';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
-import AddFood from './pages/AddFood';
 import Header from './components/Header';
 
 function App() {
@@ -15,7 +14,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/ajustes" element={<Settings />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/nuevo-alimento" element={<AddFood />} />
+            <Route path="/nuevo-alimento" element={<div className="p-6"><Header></Header>Página de Ayuda (en construcción)</div>} />
             <Route path="/ayuda" element={<div className="p-6"><Header></Header>Página de Ayuda (en construcción)</div>} />
             <Route path="*" element={<div className="p-6">Error 404: Ruta no encontrada</div>} />
           </Routes>
