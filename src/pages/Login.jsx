@@ -87,7 +87,7 @@ export default function Login() {
 
           <button
             type="button"
-            onClick={() => navigate('/ajustes')}
+            onClick={() => navigate('/')}
             className="w-full py-3 rounded-xl bg-[#1D4ED8] hover:bg-blue-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer mt-2 shadow-xs"
           >
             <span>→</span> Iniciar sesión
