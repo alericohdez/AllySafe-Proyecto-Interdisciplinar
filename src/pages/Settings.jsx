@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Edit2, Moon, Type, ChevronRight, LogOut, Check } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -5,6 +6,28 @@ import { useTheme } from '../context/ThemeContext';
 export default function Settings() {
   const navigate = useNavigate();
   const { darkMode, setDarkMode, fontSize, setFontSize } = useTheme();
+
+  
+  const [usuario] = useState(() => {
+  const usuarioGuardado = localStorage.getItem('usuarioAllySafe');
+  return usuarioGuardado ? JSON.parse(usuarioGuardado) : null;
+});
+
+  
+  const handleLogout = () => {
+    localStorage.removeItem('usuarioAllySafe');
+    navigate('/login');
+  };
+
+  
+  const obtenerIniciales = (nombre) => {
+    if (!nombre) return 'US';
+    const partes = nombre.trim().split(' ');
+    if (partes.length >= 2) {
+      return `${partes[0][0]}${partes[1][0]}`.toUpperCase();
+    }
+    return nombre.substring(0, 2).toUpperCase();
+  };
 
   return (
     <div className="min-h-screen bg-[#F3F7FC] dark:bg-black font-inter transition-colors">
@@ -29,25 +52,31 @@ export default function Settings() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="space-y-6">
+            
             <div className="bg-white dark:bg-[#142146] border border-slate-200 dark:border-[#142146] rounded-2xl p-4 flex items-center justify-between shadow-xs">
               <div className="flex items-center gap-3.5">
                 <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-black flex items-center justify-center text-[#1D4ED8] dark:text-[#C5D3FF] font-bold text-sm">
-                  LM
+                  {obtenerIniciales(usuario?.nombre)}
                 </div>
                 <div>
                   <h2 className="font-bold text-slate-900 dark:text-[#F8F8FF] text-sm">
-                    Lucía Martín
+                    {usuario ? usuario.nombre : 'Invitado'}
                   </h2>
                   <p className="text-xs text-slate-500 dark:text-[#C5D3FF]">
-                    lucia.martin@correo.es
+                    {usuario ? usuario.correo : 'Sin sesión activa'}
                   </p>
                 </div>
               </div>
-              <button type="button" aria-label="Editar perfil" className="p-2 text-blue-600 dark:text-[#C5D3FF] hover:bg-blue-50 dark:hover:bg-black rounded-lg transition-colors cursor-pointer">
+              <button 
+                type="button" 
+                aria-label="Editar perfil" 
+                className="p-2 text-blue-600 dark:text-[#C5D3FF] hover:bg-blue-50 dark:hover:bg-black rounded-lg transition-colors cursor-pointer"
+              >
                 <Edit2 className="w-4 h-4" />
               </button>
             </div>
 
+            
             <div>
               <div className="flex items-center justify-between mb-2 px-1">
                 <h2 className="text-sm font-semibold text-slate-900 dark:text-[#F8F8FF]">
@@ -74,6 +103,7 @@ export default function Settings() {
           </div>
 
           <div className="space-y-6">
+            
             <div>
               <h2 className="text-sm font-semibold text-slate-900 dark:text-[#F8F8FF] mb-2 px-1">
                 Lectura y apariencia
@@ -153,6 +183,7 @@ export default function Settings() {
               </div>
             </div>
 
+            
             <div>
               <div className="flex items-center justify-between mb-2 px-1">
                 <h2 className="text-sm font-semibold text-slate-900 dark:text-[#F8F8FF]">
@@ -189,10 +220,11 @@ export default function Settings() {
           </div>
         </div>
 
+        
         <div className="pt-4 max-w-sm mx-auto">
           <button
             type="button"
-            onClick={() => navigate('/login')}
+            onClick={handleLogout}
             className="w-full py-3 text-blue-600 dark:text-[#C5D3FF] font-semibold text-sm rounded-xl flex items-center justify-center gap-2 hover:bg-blue-50 dark:hover:bg-[#142146] transition-colors cursor-pointer"
           >
             <LogOut className="w-4 h-4" />

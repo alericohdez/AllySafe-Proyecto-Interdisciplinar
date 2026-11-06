@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import Header from './components/Header';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/ajustes" element={<Settings />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/nuevo-alimento" element={<div className="p-6"><Header></Header>Página de Ayuda (en construcción)</div>} />
+            <Route path="/nuevo-alimento" element={<div className="p-6"><Header></Header>Página en construcción</div>} />
             <Route path="/ayuda" element={<div className="p-6"><Header></Header>Página de Ayuda (en construcción)</div>} />
+            <Route path="/register" element={<Register />} />
             <Route path="*" element={<div className="p-6">Error 404: Ruta no encontrada</div>} />
           </Routes>
         </div>
