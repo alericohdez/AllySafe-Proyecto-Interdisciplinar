@@ -12,12 +12,13 @@ function App() {
       <BrowserRouter>
         <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#1E1E1E] text-slate-900 dark:text-slate-100 transition-colors duration-200">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/ajustes" element={<Settings />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/ajustes" element={<Settings />} />
             <Route path="/nuevo-alimento" element={<div className="p-6"><Header></Header>Página en construcción</div>} />
             <Route path="/ayuda" element={<div className="p-6"><Header></Header>Página de Ayuda (en construcción)</div>} />
-            <Route path="/register" element={<Register />} />
             <Route path="*" element={<div className="p-6">Error 404: Ruta no encontrada</div>} />
           </Routes>
         </div>

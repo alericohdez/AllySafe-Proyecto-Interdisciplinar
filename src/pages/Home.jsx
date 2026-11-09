@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#F3F7FC] dark:bg-black font-inter transition-colors">
+    <div className="min-h-screen flex flex-col bg-[#F3F7FC] dark:bg-[#000000] font-inter transition-colors">
       <Header />
       <main className="flex-1 max-w-2xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-10 flex flex-col items-center">
 

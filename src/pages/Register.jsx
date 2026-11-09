@@ -6,24 +6,27 @@ import Header from '../components/Header';
 export default function Register() {
   const navigate = useNavigate();
 
-
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
 
-
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [exito, setExito] = useState(null);
   const [cargando, setCargando] = useState(false);
-
 
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null);
+    setExito(null);
 
-    
+    if (contrasena.length < 6) {
+      setError('La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
     if (contrasena !== confirmarContrasena) {
       setError('Las contraseñas no coinciden.');
       return;
@@ -45,12 +48,14 @@ export default function Register() {
         throw new Error(mensajeError || 'Error al completar el registro.');
       }
 
-      
       const usuarioCreado = await response.json();
-      localStorage.setItem('usuarioAllySafe', JSON.stringify(usuarioCreado));
+      sessionStorage.setItem('usuarioAllySafe', JSON.stringify(usuarioCreado));
 
-      
-      navigate('/');
+      setExito('¡Cuenta registrada con éxito! Redirigiendo...');
+
+      setTimeout(() => {
+        navigate('/home');
+      }, 1500);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -63,7 +68,6 @@ export default function Register() {
       <Header />
 
       <main className="flex-1 max-w-md w-full mx-auto px-4 sm:px-6 py-8 flex flex-col justify-center space-y-6">
-        
         <section className="space-y-2 text-center sm:text-left">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A] dark:text-[#F8F8FF] leading-tight">
             Crea tu cuenta en AllySafe
@@ -73,19 +77,22 @@ export default function Register() {
           </p>
         </section>
 
-        
         <form
           className="space-y-4 bg-[#FFFFFF] dark:bg-[#142146] sm:p-6 p-4 rounded-2xl border border-slate-200 dark:border-[#142146] shadow-xs"
           onSubmit={handleRegister}
         >
-          
           {error && (
             <div className="p-3 text-xs font-semibold text-red-700 bg-red-100 border border-red-200 rounded-xl text-center dark:bg-red-900/30 dark:border-red-800 dark:text-red-300">
               {error}
             </div>
           )}
 
-          
+          {exito && (
+            <div className="p-3 text-xs font-semibold text-emerald-700 bg-emerald-100 border border-emerald-200 rounded-xl text-center dark:bg-emerald-900/30 dark:border-emerald-800 dark:text-emerald-300">
+              {exito}
+            </div>
+          )}
+
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-[#0F172A] dark:text-[#F8F8FF]">
               Nombre completo
@@ -103,7 +110,6 @@ export default function Register() {
             </div>
           </div>
 
-          
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-[#0F172A] dark:text-[#F8F8FF]">
               Correo electrónico
@@ -121,7 +127,6 @@ export default function Register() {
             </div>
           </div>
 
-          
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-[#0F172A] dark:text-[#F8F8FF]">
               Contraseña
@@ -146,7 +151,6 @@ export default function Register() {
             </div>
           </div>
 
-          
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-[#0F172A] dark:text-[#F8F8FF]">
               Confirmar contraseña
@@ -171,10 +175,9 @@ export default function Register() {
             </div>
           </div>
 
-          
           <button
             type="submit"
-            disabled={cargando}
+            disabled={cargando || !!exito}
             className="w-full py-3 rounded-xl bg-[#1D4ED8] hover:bg-blue-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer mt-4 shadow-xs disabled:opacity-50"
           >
             {cargando ? (
@@ -186,7 +189,6 @@ export default function Register() {
             )}
           </button>
 
-          
           <p className="text-center text-xs text-[#AEB5BF] dark:text-[#C5D3FF] pt-2">
             ¿Ya tienes una cuenta?{' '}
             <button
@@ -199,7 +201,6 @@ export default function Register() {
           </p>
         </form>
 
-        
         <div className="flex items-center gap-2 p-3 rounded-xl bg-blue-50/50 dark:bg-[#142146] text-[#AEB5BF] dark:text-[#C5D3FF] text-[11px]">
           <Info className="w-4 h-4 shrink-0 text-[#AEB5BF] dark:text-[#C5D3FF]" />
           <p>Tus datos se almacenan de forma segura para gestionar tus perfiles de alérgenos.</p>

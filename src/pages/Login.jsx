@@ -13,7 +13,7 @@ export default function Login() {
   const [error, setError] = useState(null);
   const [cargando, setCargando] = useState(false);
 
-  
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
@@ -33,14 +33,13 @@ export default function Login() {
         throw new Error(mensajeError || 'Credenciales incorrectas');
       }
 
-      
+
       const usuarioLogueado = await response.json();
+      sessionStorage.setItem('usuarioAllySafe', JSON.stringify(usuarioLogueado));
+      navigate('/home');
 
-      
-      localStorage.setItem('usuarioAllySafe', JSON.stringify(usuarioLogueado));
 
-      
-      navigate('/');
+      navigate('/home');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -62,8 +61,8 @@ export default function Login() {
           </p>
         </section>
 
-        <form 
-          className="space-y-4 bg-white dark:bg-[#142146] sm:p-6 p-4 rounded-2xl border border-slate-200 dark:border-[#142146] shadow-xs" 
+        <form
+          className="space-y-4 bg-white dark:bg-[#142146] sm:p-6 p-4 rounded-2xl border border-slate-200 dark:border-[#142146] shadow-xs"
           onSubmit={handleLogin}
         >
 
@@ -136,8 +135,8 @@ export default function Login() {
 
           <p className="text-center text-xs text-slate-500 dark:text-[#C5D3FF] pt-2">
             ¿Es tu primera vez?{' '}
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={() => navigate('/register')}
               className="font-semibold text-[#1D4ED8] dark:text-[#C5D3FF] cursor-pointer"
             >

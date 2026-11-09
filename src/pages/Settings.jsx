@@ -7,19 +7,18 @@ export default function Settings() {
   const navigate = useNavigate();
   const { darkMode, setDarkMode, fontSize, setFontSize } = useTheme();
 
-  
-  const [usuario] = useState(() => {
-  const usuarioGuardado = localStorage.getItem('usuarioAllySafe');
-  return usuarioGuardado ? JSON.parse(usuarioGuardado) : null;
-});
 
-  
+  const [usuario] = useState(() => {
+    const usuarioGuardado = sessionStorage.getItem('usuarioAllySafe');
+    return usuarioGuardado ? JSON.parse(usuarioGuardado) : null;
+  });
+
   const handleLogout = () => {
-    localStorage.removeItem('usuarioAllySafe');
+    sessionStorage.removeItem('usuarioAllySafe');
     navigate('/login');
   };
 
-  
+
   const obtenerIniciales = (nombre) => {
     if (!nombre) return 'US';
     const partes = nombre.trim().split(' ');
@@ -52,7 +51,7 @@ export default function Settings() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="space-y-6">
-            
+
             <div className="bg-white dark:bg-[#142146] border border-slate-200 dark:border-[#142146] rounded-2xl p-4 flex items-center justify-between shadow-xs">
               <div className="flex items-center gap-3.5">
                 <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-black flex items-center justify-center text-[#1D4ED8] dark:text-[#C5D3FF] font-bold text-sm">
@@ -67,16 +66,16 @@ export default function Settings() {
                   </p>
                 </div>
               </div>
-              <button 
-                type="button" 
-                aria-label="Editar perfil" 
+              <button
+                type="button"
+                aria-label="Editar perfil"
                 className="p-2 text-blue-600 dark:text-[#C5D3FF] hover:bg-blue-50 dark:hover:bg-black rounded-lg transition-colors cursor-pointer"
               >
                 <Edit2 className="w-4 h-4" />
               </button>
             </div>
 
-            
+
             <div>
               <div className="flex items-center justify-between mb-2 px-1">
                 <h2 className="text-sm font-semibold text-slate-900 dark:text-[#F8F8FF]">
@@ -103,7 +102,7 @@ export default function Settings() {
           </div>
 
           <div className="space-y-6">
-            
+
             <div>
               <h2 className="text-sm font-semibold text-slate-900 dark:text-[#F8F8FF] mb-2 px-1">
                 Lectura y apariencia
@@ -125,14 +124,12 @@ export default function Settings() {
                     type="button"
                     onClick={() => setDarkMode(!darkMode)}
                     aria-label="Alternar modo oscuro"
-                    className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors cursor-pointer ${
-                      darkMode ? 'bg-[#1D4ED8]' : 'bg-slate-300'
-                    }`}
+                    className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors cursor-pointer ${darkMode ? 'bg-[#1D4ED8]' : 'bg-slate-300'
+                      }`}
                   >
                     <div
-                      className={`bg-white dark:bg-[#F8F8FF] w-4 h-4 rounded-full shadow-md transform transition-transform ${
-                        darkMode ? 'translate-x-6' : 'translate-x-0'
-                      }`}
+                      className={`bg-white dark:bg-[#F8F8FF] w-4 h-4 rounded-full shadow-md transform transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-0'
+                        }`}
                     />
                   </button>
                 </div>
@@ -148,33 +145,30 @@ export default function Settings() {
                     <button
                       type="button"
                       onClick={() => setFontSize('small')}
-                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${
-                        fontSize === 'small'
+                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${fontSize === 'small'
                           ? 'bg-[#1D4ED8] text-white font-semibold'
                           : 'text-slate-600 dark:text-[#C5D3FF]'
-                      }`}
+                        }`}
                     >
                       Pequeño
                     </button>
                     <button
                       type="button"
                       onClick={() => setFontSize('normal')}
-                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${
-                        fontSize === 'normal'
+                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${fontSize === 'normal'
                           ? 'bg-[#1D4ED8] text-white font-semibold'
                           : 'text-slate-600 dark:text-[#C5D3FF]'
-                      }`}
+                        }`}
                     >
                       Normal
                     </button>
                     <button
                       type="button"
                       onClick={() => setFontSize('large')}
-                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${
-                        fontSize === 'large'
+                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${fontSize === 'large'
                           ? 'bg-[#1D4ED8] text-white font-semibold'
                           : 'text-slate-600 dark:text-[#C5D3FF]'
-                      }`}
+                        }`}
                     >
                       Grande
                     </button>
@@ -183,7 +177,7 @@ export default function Settings() {
               </div>
             </div>
 
-            
+
             <div>
               <div className="flex items-center justify-between mb-2 px-1">
                 <h2 className="text-sm font-semibold text-slate-900 dark:text-[#F8F8FF]">
@@ -220,7 +214,7 @@ export default function Settings() {
           </div>
         </div>
 
-        
+
         <div className="pt-4 max-w-sm mx-auto">
           <button
             type="button"

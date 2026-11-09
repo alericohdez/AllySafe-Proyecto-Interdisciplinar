@@ -1,6 +1,6 @@
 const API_URL = 'http://localhost:8080/api';
 
-// --- USUARIOS ---
+
 export const registrarUsuario = async (datosUsuario) => {
   const res = await fetch(`${API_URL}/usuarios/registro`, {
     method: 'POST',
