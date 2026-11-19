@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Eye, EyeOff, Info } from 'lucide-react';
 import Header from '../components/Header';
+import { loginUsuario } from '../services/api';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -20,28 +21,11 @@ export default function Login() {
     setCargando(true);
 
     try {
-      const response = await fetch('http://localhost:8080/api/usuarios/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ correo, contrasena }),
-      });
-
-      if (!response.ok) {
-        const mensajeError = await response.text();
-        throw new Error(mensajeError || 'Credenciales incorrectas');
-      }
-
-
-      const usuarioLogueado = await response.json();
+      const usuarioLogueado = await loginUsuario({ correo, contrasena });
       sessionStorage.setItem('usuarioAllySafe', JSON.stringify(usuarioLogueado));
       navigate('/home');
-
-
-      navigate('/home');
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Credenciales incorrectas');
     } finally {
       setCargando(false);
     }

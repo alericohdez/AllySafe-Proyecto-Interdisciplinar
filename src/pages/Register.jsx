@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Mail, Eye, EyeOff, Info } from 'lucide-react';
 import Header from '../components/Header';
+import { registrarUsuario } from '../services/api';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -35,20 +36,7 @@ export default function Register() {
     setCargando(true);
 
     try {
-      const response = await fetch('http://localhost:8080/api/usuarios/registro', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ nombre, correo, contrasena }),
-      });
-
-      if (!response.ok) {
-        const mensajeError = await response.text();
-        throw new Error(mensajeError || 'Error al completar el registro.');
-      }
-
-      const usuarioCreado = await response.json();
+      const usuarioCreado = await registrarUsuario({ nombre, correo, contrasena });
       sessionStorage.setItem('usuarioAllySafe', JSON.stringify(usuarioCreado));
 
       setExito('¡Cuenta registrada con éxito! Redirigiendo...');
@@ -57,7 +45,7 @@ export default function Register() {
         navigate('/home');
       }, 1500);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Error al completar el registro.');
     } finally {
       setCargando(false);
     }

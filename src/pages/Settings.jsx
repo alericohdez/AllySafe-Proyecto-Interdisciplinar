@@ -1,23 +1,53 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Edit2, Moon, Type, ChevronRight, LogOut, Check } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, Edit2, Moon, Type, LogOut, Check, Pencil } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { obtenerAlimentos } from '../services/api';
 
 export default function Settings() {
   const navigate = useNavigate();
   const { darkMode, setDarkMode, fontSize, setFontSize } = useTheme();
-
 
   const [usuario] = useState(() => {
     const usuarioGuardado = sessionStorage.getItem('usuarioAllySafe');
     return usuarioGuardado ? JSON.parse(usuarioGuardado) : null;
   });
 
+  const [misAlimentos, setMisAlimentos] = useState([]);
+  const [cargandoAlimentos, setCargandoAlimentos] = useState(true);
+
+  // Cargar y filtrar los alimentos creados por el usuario activo
+  useEffect(() => {
+    const cargarMisAlimentos = async () => {
+      if (!usuario?.idUsuario) {
+        setCargandoAlimentos(false);
+        return;
+      }
+      try {
+        const todos = await obtenerAlimentos();
+        const propios = todos.filter(
+          (item) => item.usuario?.idUsuario === usuario.idUsuario
+        );
+        setMisAlimentos(propios);
+      } catch (error) {
+        console.error('Error al cargar los alimentos del usuario:', error);
+      } finally {
+        setCargandoAlimentos(false);
+      }
+    };
+
+    cargarMisAlimentos();
+  }, [usuario]);
+
   const handleLogout = () => {
     sessionStorage.removeItem('usuarioAllySafe');
     navigate('/login');
   };
 
+  const handleEditarAlimento = (alimento) => {
+    // Navega a AddFood.jsx pasando el alimento completo en location.state
+    navigate('/nuevo-alimento', { state: { alimentoEditar: alimento } });
+  };
 
   const obtenerIniciales = (nombre) => {
     if (!nombre) return 'US';
@@ -33,7 +63,7 @@ export default function Settings() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 lg:py-10">
         <button
           type="button"
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/home')}
           aria-label="Volver al inicio"
           className="p-2 -ml-2 rounded-full hover:bg-slate-200 dark:hover:bg-[#142146] transition-colors cursor-pointer mb-4"
         >
@@ -51,7 +81,7 @@ export default function Settings() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="space-y-6">
-
+            {/* Tarjeta de perfil */}
             <div className="bg-white dark:bg-[#142146] border border-slate-200 dark:border-[#142146] rounded-2xl p-4 flex items-center justify-between shadow-xs">
               <div className="flex items-center gap-3.5">
                 <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-black flex items-center justify-center text-[#1D4ED8] dark:text-[#C5D3FF] font-bold text-sm">
@@ -75,7 +105,7 @@ export default function Settings() {
               </button>
             </div>
 
-
+            {/* Mis alergias */}
             <div>
               <div className="flex items-center justify-between mb-2 px-1">
                 <h2 className="text-sm font-semibold text-slate-900 dark:text-[#F8F8FF]">
@@ -102,7 +132,7 @@ export default function Settings() {
           </div>
 
           <div className="space-y-6">
-
+            {/* Lectura y apariencia */}
             <div>
               <h2 className="text-sm font-semibold text-slate-900 dark:text-[#F8F8FF] mb-2 px-1">
                 Lectura y apariencia
@@ -124,12 +154,14 @@ export default function Settings() {
                     type="button"
                     onClick={() => setDarkMode(!darkMode)}
                     aria-label="Alternar modo oscuro"
-                    className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors cursor-pointer ${darkMode ? 'bg-[#1D4ED8]' : 'bg-slate-300'
-                      }`}
+                    className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors cursor-pointer ${
+                      darkMode ? 'bg-[#1D4ED8]' : 'bg-slate-300'
+                    }`}
                   >
                     <div
-                      className={`bg-white dark:bg-[#F8F8FF] w-4 h-4 rounded-full shadow-md transform transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-0'
-                        }`}
+                      className={`bg-white dark:bg-[#F8F8FF] w-4 h-4 rounded-full shadow-md transform transition-transform ${
+                        darkMode ? 'translate-x-6' : 'translate-x-0'
+                      }`}
                     />
                   </button>
                 </div>
@@ -145,30 +177,33 @@ export default function Settings() {
                     <button
                       type="button"
                       onClick={() => setFontSize('small')}
-                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${fontSize === 'small'
+                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${
+                        fontSize === 'small'
                           ? 'bg-[#1D4ED8] text-white font-semibold'
                           : 'text-slate-600 dark:text-[#C5D3FF]'
-                        }`}
+                      }`}
                     >
                       Pequeño
                     </button>
                     <button
                       type="button"
                       onClick={() => setFontSize('normal')}
-                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${fontSize === 'normal'
+                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${
+                        fontSize === 'normal'
                           ? 'bg-[#1D4ED8] text-white font-semibold'
                           : 'text-slate-600 dark:text-[#C5D3FF]'
-                        }`}
+                      }`}
                     >
                       Normal
                     </button>
                     <button
                       type="button"
                       onClick={() => setFontSize('large')}
-                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${fontSize === 'large'
+                      className={`py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${
+                        fontSize === 'large'
                           ? 'bg-[#1D4ED8] text-white font-semibold'
                           : 'text-slate-600 dark:text-[#C5D3FF]'
-                        }`}
+                      }`}
                     >
                       Grande
                     </button>
@@ -177,43 +212,71 @@ export default function Settings() {
               </div>
             </div>
 
-
+            {/* Mis alimentos dinámicos */}
             <div>
               <div className="flex items-center justify-between mb-2 px-1">
                 <h2 className="text-sm font-semibold text-slate-900 dark:text-[#F8F8FF]">
                   Mis alimentos
                 </h2>
                 <span className="text-xs font-semibold text-blue-600 dark:text-[#C5D3FF]">
-                  1 creado
+                  {misAlimentos.length} {misAlimentos.length === 1 ? 'creado' : 'creados'}
                 </span>
               </div>
-              <Link
-                to="/"
-                className="bg-white dark:bg-[#142146] border border-slate-200 dark:border-[#142146] rounded-2xl p-3 flex items-center justify-between shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-slate-200 dark:bg-black overflow-hidden shrink-0">
-                    <img
-                      src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=100&auto=format&fit=crop"
-                      alt="Galletas de avena"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-slate-900 dark:text-[#F8F8FF]">
-                      Galletas de avena
-                    </p>
-                    <p className="text-xs text-slate-500 dark:text-[#C5D3FF]">
-                      Campo Claro · Galletas
-                    </p>
-                  </div>
+
+              {cargandoAlimentos ? (
+                <div className="bg-white dark:bg-[#142146] border border-slate-200 dark:border-[#142146] rounded-2xl p-4 text-xs text-slate-500 dark:text-[#C5D3FF]">
+                  Cargando tus alimentos...
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-400 dark:text-[#C5D3FF]" />
-              </Link>
+              ) : misAlimentos.length === 0 ? (
+                <div className="bg-white dark:bg-[#142146] border border-slate-200 dark:border-[#142146] rounded-2xl p-4 text-center space-y-2">
+                  <p className="text-xs text-slate-500 dark:text-[#C5D3FF]">
+                    {usuario
+                      ? 'Todavía no has añadido ningún alimento.'
+                      : 'Inicia sesión para ver y editar tus alimentos creados.'}
+                  </p>
+                  {usuario && (
+                    <button
+                      type="button"
+                      onClick={() => navigate('/nuevo-alimento')}
+                      className="text-xs font-semibold text-[#1D4ED8] dark:text-[#C5D3FF] hover:underline cursor-pointer"
+                    >
+                      + Añadir mi primer alimento
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-2.5">
+                  {misAlimentos.map((item) => (
+                    <div
+                      key={item.idAlimento}
+                      className="bg-white dark:bg-[#142146] border border-slate-200 dark:border-[#142146] rounded-2xl p-3.5 flex items-center justify-between gap-3 shadow-xs"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-slate-900 dark:text-[#F8F8FF] truncate">
+                          {item.nombre}
+                        </p>
+                        <p className="text-xs text-slate-500 dark:text-[#C5D3FF] truncate">
+                          {item.marca || 'Marca genérica'} · {item.categoria?.nombre || 'Sin categoría'}
+                          {item.calorias != null ? ` · ${item.calorias} kcal` : ''}
+                        </p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => handleEditarAlimento(item)}
+                        aria-label={`Editar ${item.nombre}`}
+                        className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-black text-[#1D4ED8] dark:text-[#C5D3FF] hover:bg-blue-100 dark:hover:bg-slate-900 text-xs font-semibold transition-colors cursor-pointer"
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                        Editar
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
-
 
         <div className="pt-4 max-w-sm mx-auto">
           <button

@@ -41,7 +41,7 @@ export default function Header({ showBack = false, title = '' }) {
             </button>
           ) : (
             <Link
-              to="/"
+              to="/home"
               aria-label="Ir al inicio de AllySafe"
               className="w-9 h-9 rounded-xl bg-[#1D4ED8] flex items-center justify-center text-[#F8F8FF] shadow-sm hover:bg-blue-700 transition-colors"
             >
