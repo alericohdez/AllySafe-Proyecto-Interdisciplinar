@@ -1,16 +1,49 @@
-# React + Vite
+# AllySafe — Frontend Web & PWA (Módulo DAD)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web progresiva (PWA) desarrollada en **React** para la consulta de alimentos, gestión de despensa personal y control de alérgenos e intolerancias alimentarias. Forma parte del Proyecto Interdisciplinar **AllySafe** y se comunica mediante peticiones REST con el backend en Spring Boot.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 1. Stack Tecnológico
 
-## React Compiler
+* **Librería principal:** React (con Vite como empaquetador).
+* **Estilos y diseño:** Tailwind CSS (`@tailwindcss/vite`) y tipografía `Inter`.
+* **Enrutamiento:** React Router DOM (`BrowserRouter`, `Routes`, `Route`) con carga diferida (`React.lazy` y `Suspense`).
+* **Iconografía:** `lucide-react`.
+* **Persistencia en cliente:** `sessionStorage` (gestión de sesión activa) y `localStorage` (preferencias de tema y accesibilidad).
+* **PWA & Offline:** Web App Manifest (`manifest.json`) y Service Worker nativo (`sw.js`).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 2. Arquitectura y Estructura del Proyecto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+El código fuente sigue una arquitectura modular basada en componentes reutilizables, contextos globales y servicios desacoplados:
+
+```text
+AllySafe-Proyecto-Interdisciplinar/
+├── public/
+│   ├── favicon.svg              # Icono vectorial de la aplicación
+│   ├── icon-192.png             # Icono PWA 192x192 px
+│   ├── icon-512.png             # Icono PWA 512x512 px
+│   ├── manifest.json            # Configuración de instalabilidad PWA
+│   └── sw.js                    # Service Worker (caché App Shell y soporte offline)
+├── src/
+│   ├── components/
+│   │   ├── BuscadorFiltros.jsx  # Barra de búsqueda validada, selectores y chips de filtros
+│   │   ├── FoodResults.jsx      # Listado de alimentos con tarjetas desplegables y acciones CRUD
+│   │   └── Header.jsx           # Cabecera de navegación y estado de conexión
+│   ├── context/
+│   │   └── ThemeContext.jsx     # Gestión global de modo oscuro y tamaño de fuente
+│   ├── pages/
+│   │   ├── AddFood.jsx          # Formulario dual para alta (POST) y edición (PUT) de alimentos
+│   │   ├── Home.jsx             # Vista principal de despensa, filtros y resultados
+│   │   ├── Login.jsx            # Inicio de sesión con validación
+│   │   ├── Register.jsx         # Registro de nuevos usuarios con validación
+│   │   └── Settings.jsx         # Perfil de usuario, alergias, accesibilidad y cierre de sesión
+│   ├── services/
+│   │   └── api.js               # Cliente HTTP centralizado hacia la API REST (puerto 8080)
+│   ├── App.jsx                  # Definición de rutas, Lazy Loading y control de error 404
+│   ├── index.css                # Configuración de Tailwind CSS y variables de tema
+│   └── main.jsx                 # Punto de entrada y registro del Service Worker en producción
+├── index.html                   # Documento base con metadatos SEO, PWA y accesibilidad
+└── vite.config.js               # Configuración de Vite y división de bundles (manualChunks)

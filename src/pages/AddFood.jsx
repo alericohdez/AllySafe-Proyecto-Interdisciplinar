@@ -291,7 +291,7 @@ export default function AddFood() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-700 dark:text-[#F8F8FF]">
-                Calorías (kcal)
+                Calorías por cada 100g (kcal)
               </label>
               <input
                 type="number"

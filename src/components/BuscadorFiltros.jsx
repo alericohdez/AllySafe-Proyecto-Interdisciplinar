@@ -11,18 +11,15 @@ export default function BuscadorFiltros({
   onLimpiarTodo,
   totalResultados
 }) {
-  // Estados locales del formulario (borrador antes de confirmar)
   const [busqueda, setBusqueda] = useState(filtrosActivos.busqueda || '');
   const [alergenoNombre, setAlergenoNombre] = useState(filtrosActivos.alergenoNombre || '');
   const [categoriaId, setCategoriaId] = useState(filtrosActivos.categoriaId || '');
   const [maxCalorias, setMaxCalorias] = useState(filtrosActivos.maxCalorias || '');
   const [soloMios, setSoloMios] = useState(filtrosActivos.soloMios || false);
 
-  // Estados de validación y confirmación (Ux 3)
   const [errores, setErrores] = useState({});
   const [confirmacion, setConfirmacion] = useState('');
 
-  // Validaciones de longitud, formato y rangos
   const validarCampos = () => {
     const nuevosErrores = {};
 
@@ -43,7 +40,6 @@ export default function BuscadorFiltros({
     return Object.keys(nuevosErrores).length === 0;
   };
 
-  // Aplicar búsqueda/filtros (no es obligatorio rellenar ningún campo)
   const handleSubmit = (e) => {
     e.preventDefault();
     setConfirmacion('');
@@ -74,7 +70,6 @@ export default function BuscadorFiltros({
     );
   };
 
-  // Quitar un único filtro manteniendo intactos los demás
   const handleQuitarFiltro = (clave) => {
     if (clave === 'busqueda') setBusqueda('');
     if (clave === 'alergenoNombre') setAlergenoNombre('');
@@ -86,7 +81,6 @@ export default function BuscadorFiltros({
     setConfirmacion('Filtro eliminado. Resultados actualizados.');
   };
 
-  // Limpiar todo el formulario
   const handleLimpiar = () => {
     setBusqueda('');
     setAlergenoNombre('');
@@ -111,7 +105,6 @@ export default function BuscadorFiltros({
 
   return (
     <form onSubmit={handleSubmit} noValidate className="w-full space-y-3 text-left">
-      {/* Campo 1: Barra de búsqueda principal */}
       <div className="space-y-1">
         <label htmlFor="busqueda-alimento" className="sr-only">
           Buscar productos, marcas o ingredientes
@@ -145,9 +138,7 @@ export default function BuscadorFiltros({
         )}
       </div>
 
-      {/* Fila de Selectores (Alérgenos a evitar, Categoría y Calorías máx.) */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
-        {/* Selector de Alérgenos (desde GET /api/alergeno/listar) */}
         <div className="relative w-full">
           <label htmlFor="filtro-alergeno" className="sr-only">
             Excluir alérgeno
@@ -172,7 +163,6 @@ export default function BuscadorFiltros({
           </span>
         </div>
 
-        {/* Selector de Categoría (desde GET /api/categoria/listar) */}
         <div className="relative w-full">
           <label htmlFor="filtro-categoria" className="sr-only">
             Categoría
@@ -197,7 +187,6 @@ export default function BuscadorFiltros({
           </span>
         </div>
 
-        {/* Rango de Calorías Máximas */}
         <div className="space-y-1">
           <label htmlFor="filtro-calorias" className="sr-only">
             Calorías máximas
@@ -229,7 +218,6 @@ export default function BuscadorFiltros({
         </div>
       </div>
 
-      {/* Opción extra solo si hay sesión iniciada + Botones de acción */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1">
         <div>
           {usuarioLogueado ? (
@@ -269,7 +257,6 @@ export default function BuscadorFiltros({
         </div>
       </div>
 
-      {/* Mensaje de confirmación */}
       {confirmacion && (
         <div
           role="status"
@@ -290,7 +277,6 @@ export default function BuscadorFiltros({
         </div>
       )}
 
-      {/* Chips de Filtros Activos (permite quitar 1 sin perder los demás) */}
       {tieneFiltrosActivos && (
         <div className="flex flex-wrap items-center gap-2 pt-1">
           <span className="text-xs font-semibold text-[#61738A] dark:text-[#C5D3FF]">
