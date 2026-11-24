@@ -1,0 +1,26 @@
+{
+  "short_name": "AllySafe",
+  "name": "AllySafe - Tu despensa e información de alérgenos",
+  "description": "Consulta tu despensa de alimentos y controla tus alérgenos e intolerancias en cualquier lugar, incluso sin conexión.",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#F3F7FC",
+  "theme_color": "#1D4ED8",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "es-ES"
+}

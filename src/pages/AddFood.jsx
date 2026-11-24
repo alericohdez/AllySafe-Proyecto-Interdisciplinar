@@ -215,7 +215,7 @@ export default function AddFood() {
         )}
 
         <form className="space-y-6" onSubmit={handleSubmit}>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-700 dark:text-[#F8F8FF]">
@@ -248,7 +248,7 @@ export default function AddFood() {
             </div>
           </div>
 
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-700 dark:text-[#F8F8FF]">
@@ -275,29 +275,19 @@ export default function AddFood() {
               <label className="text-xs font-bold text-slate-700 dark:text-[#F8F8FF]">
                 Imagen <span className="text-slate-400 font-normal">(opcional)</span>
               </label>
-              <div className="w-full rounded-2xl border-2 border-[#1D4ED8] bg-white dark:bg-[#142146] p-3 flex items-center justify-between">
-                <img
-                  src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=160&q=75&auto=format&fit=crop"
-                  alt="Vista previa del alimento"
-                  width="80"
-                  height="80"
-                  loading="lazy"
-                  decoding="async"
-                  className="w-20 h-20 rounded-xl object-cover shrink-0"
-                />
-
+              <div className="w-full rounded-xl border border-slate-200 dark:border-[#142146] bg-white dark:bg-[#142146] p-1 flex items-center justify-between">
                 <button
                   type="button"
                   aria-label="Subir archivo"
                   className="p-2 rounded-xl text-[#1D4ED8] dark:text-[#C5D3FF] hover:bg-slate-100 dark:hover:bg-black transition-colors cursor-pointer shrink-0"
                 >
-                  <Upload className="w-5 h-5" />
+                  <Upload className="w-4 h-4" />
                 </button>
               </div>
             </div>
           </div>
 
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-700 dark:text-[#F8F8FF]">
@@ -315,8 +305,9 @@ export default function AddFood() {
 
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-700 dark:text-[#F8F8FF]">
-                Código de barras
-              </label>
+                Código de barras 
+                <span className="text-slate-400 font-normal"> (opcional)</span>
+              </label> 
               <input
                 type="text"
                 maxLength={50}
@@ -328,7 +319,7 @@ export default function AddFood() {
             </div>
           </div>
 
-          
+
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-700 dark:text-[#F8F8FF]">
               Ingredientes
@@ -342,7 +333,7 @@ export default function AddFood() {
             />
           </div>
 
-          
+
           <div className="space-y-3 pt-2">
             <div className="flex items-center justify-between">
               <label className="text-xs font-bold text-slate-700 dark:text-[#F8F8FF]">
@@ -358,7 +349,7 @@ export default function AddFood() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-             
+
               <div className="rounded-2xl border border-slate-200 dark:border-[#142146] bg-white dark:bg-[#142146] p-4 space-y-3">
                 <div className="flex items-center gap-1.5 text-xs text-slate-700 dark:text-[#F8F8FF]">
                   <AlertCircle className="w-4 h-4 text-[#1D4ED8] dark:text-[#C5D3FF]" />
@@ -448,22 +439,20 @@ export default function AddFood() {
                           <button
                             type="button"
                             onClick={() => toggleContiene(al.idAlergeno)}
-                            className={`px-2 py-1 rounded-lg font-semibold cursor-pointer ${
-                              esContiene
+                            className={`px-2 py-1 rounded-lg font-semibold cursor-pointer ${esContiene
                                 ? 'bg-[#1D4ED8] text-white'
                                 : 'bg-white dark:bg-[#142146] text-slate-600 dark:text-[#C5D3FF]'
-                            }`}
+                              }`}
                           >
                             Contiene
                           </button>
                           <button
                             type="button"
                             onClick={() => toggleTraza(al.idAlergeno)}
-                            className={`px-2 py-1 rounded-lg font-semibold cursor-pointer ${
-                              esTraza
+                            className={`px-2 py-1 rounded-lg font-semibold cursor-pointer ${esTraza
                                 ? 'bg-slate-800 text-white dark:bg-blue-900'
                                 : 'bg-white dark:bg-[#142146] text-slate-600 dark:text-[#C5D3FF]'
-                            }`}
+                              }`}
                           >
                             Traza
                           </button>
@@ -498,8 +487,8 @@ export default function AddFood() {
               {guardando
                 ? 'Guardando...'
                 : esEdicion
-                ? 'Guardar cambios'
-                : 'Guardar alimento'}
+                  ? 'Guardar cambios'
+                  : 'Guardar alimento'}
             </button>
           </div>
         </form>
